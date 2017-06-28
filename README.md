@@ -1,2 +1,2 @@
 # adr-cli
-A Windows equivalent of adr-tools (https://github.com/npryce/adr-tools)
+A command-line tool for working with Architecture Decision Records (ADRs).
