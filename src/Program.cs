@@ -23,6 +23,41 @@ namespace src
                 command.HelpOption(HelpOption);
             });
 
+            app.Command("list", (command) =>
+            {
+                command.Description = "";
+                command.OnExecute(() => {
+                    return 0;
+                });
+            });
+
+            app.Command("new", (command) =>
+            {
+                command.Description = "";
+                command.OnExecute(() =>
+                {
+                    return 0;
+                });
+            });
+
+            app.Command("link", (command) =>
+            {
+                command.Description = "";
+                command.OnExecute(() =>
+                {
+                    return 0;
+                });
+            });
+
+            app.Command("generate", (command) =>
+            {
+                command.Description = "";
+                command.OnExecute(() =>
+                {
+                    return 0;
+                });
+            });
+
             app.OnExecute(() =>
             {
                 app.ShowHelp();
