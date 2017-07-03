@@ -2,7 +2,7 @@
 using System.Reflection;
 using Microsoft.Extensions.CommandLineUtils;
 
-namespace src
+namespace adr
 {
     internal static class Program
     {
@@ -19,8 +19,18 @@ namespace src
             app.Command("init", (command) =>
             {
                 command.Description = "Init it";
-                command.Argument("[directory]", "");
+                var directory = command.Argument("[directory]", "");
                 command.HelpOption(HelpOption);
+                command.OnExecute(() =>
+                {
+                    var settings = AdrSettings.Current;
+                    settings.DocFolder = directory.Value ?? settings.DocFolder;
+                    settings.Write();
+                    new AdrEntry(TemplateType.Adr)
+                        .Write()
+                        .Launch();
+                    return 0;
+                });
             });
 
             app.Command("list", (command) =>
@@ -34,8 +44,15 @@ namespace src
             app.Command("new", (command) =>
             {
                 command.Description = "";
+                var title = command.Argument("title", "");
+                var supercedes = command.Option("-s|--supercedes", "", CommandOptionType.MultipleValue);
+                command.HelpOption(HelpOption);
+
                 command.OnExecute(() =>
                 {
+                    new AdrEntry(TemplateType.New) { Title = title.Value ?? "" }
+                        .Write()
+                        .Launch();
                     return 0;
                 });
             });
