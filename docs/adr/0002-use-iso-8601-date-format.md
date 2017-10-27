@@ -1,6 +1,6 @@
 # 2. Use ISO 8601 Date Format
 
-03/07/2017
+2017-07-03
 
 ## Status
 
@@ -12,7 +12,7 @@ Accepted
 
 To communicate effectively, `adr-tools` should present information as unambiguously as possible. That means that culture-neutral data formats should be preferred over culture-specific formats.
 
-Existing adr-tools deployments format dates as dd/mm/yyyy by default. That formatting is common formatting in the United Kingdom (where the project was originally written), but is easily confused with the mm/dd/yyyy format preferred in the United States.
+Existing adr-tools deployments format dates as dd/mm/yyyy by default. That formatting is common formatting in the United Kingdom (where the project was originally written), but is [easily confused](https://xkcd.com/1179/) with the mm/dd/yyyy format preferred in the United States.
 
 ## Decision
 

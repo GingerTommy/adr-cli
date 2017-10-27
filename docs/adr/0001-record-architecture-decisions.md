@@ -1,6 +1,6 @@
 # 1. Record Architecture Decisions
 
-03/07/2017
+2017-07-03
 
 ## Status
 
