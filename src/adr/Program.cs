@@ -1,6 +1,4 @@
-﻿using System;
-using System.Reflection;
-using Microsoft.Extensions.CommandLineUtils;
+﻿using Microsoft.Extensions.CommandLineUtils;
 
 namespace adr
 {
