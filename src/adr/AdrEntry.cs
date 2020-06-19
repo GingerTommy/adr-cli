@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace adr
 {
-    public class AdrEntry
+    internal class AdrEntry
     {
         private readonly string docFolder;
         
@@ -47,7 +47,56 @@ namespace adr
             fileName = Path.Combine(
                 docFolder,
                 $"{fileNumber.ToString().PadLeft(4, '0')}-{SanitizeFileName(this.Title)}.md");
-            using (var writer = File.CreateText(fileName))
+
+            CreateDocumentsFolderIfNotExists();
+
+            WriteAdrFile(fileNumber);
+        }
+
+        private void WriteAdr()
+        {
+            var fileNumber = Directory.Exists(this.docFolder)
+                ? GetNextFileNumber(this.docFolder)
+                : 1;
+            fileName = Path.Combine(
+                this.docFolder,
+                $"{fileNumber.ToString().PadLeft(4, '0')}-{SanitizeFileName(this.Title)}.md");
+
+            CreateDocumentsFolderIfNotExists();
+
+            WriteInitialAdrFile(fileNumber);
+        }
+
+        private void WriteInitialAdrFile(int fileNumber)
+        {
+            using var writer = File.CreateText(this.fileName);
+            {
+                writer.WriteLine($"# {fileNumber}. {this.Title}");
+                writer.WriteLine();
+                writer.WriteLine(DateTime.Today.ToString("yyyy-MM-dd"));
+                writer.WriteLine();
+                writer.WriteLine("## Status");
+                writer.WriteLine();
+                writer.WriteLine("Accepted");
+                writer.WriteLine();
+                writer.WriteLine("## Context");
+                writer.WriteLine();
+                writer.WriteLine("We need to record the architectural decisions made on this project.");
+                writer.WriteLine();
+                writer.WriteLine("## Decision");
+                writer.WriteLine();
+                writer.WriteLine(
+                    "We will use Architecture Decision Records, as described by Michael Nygard in this article: http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions");
+                writer.WriteLine();
+                writer.WriteLine("## Consequences");
+                writer.WriteLine();
+                writer.WriteLine("See Michael Nygard's article, linked above.");
+            }
+        }
+
+        private void WriteAdrFile(int fileNumber)
+        {
+            using var writer = File.CreateText(fileName);
             {
                 writer.WriteLine($"# {fileNumber}. {this.Title}");
                 writer.WriteLine();
@@ -71,35 +120,11 @@ namespace adr
             }
         }
 
-        private void WriteAdr()
+        private void CreateDocumentsFolderIfNotExists()
         {
-            var fileNumber = Directory.Exists(this.docFolder)
-                ? GetNextFileNumber(this.docFolder)
-                : 1;
-            fileName = Path.Combine(
-                docFolder,
-                $"{fileNumber.ToString().PadLeft(4, '0')}-{SanitizeFileName(this.Title)}.md");
-            using (var writer = File.CreateText(fileName))
+            if (!Directory.Exists(this.docFolder))
             {
-                writer.WriteLine($"# {fileNumber}. {this.Title}");
-                writer.WriteLine();
-                writer.WriteLine(DateTime.Today.ToString("yyyy-MM-dd"));
-                writer.WriteLine();
-                writer.WriteLine("## Status");
-                writer.WriteLine();
-                writer.WriteLine("Accepted");
-                writer.WriteLine();
-                writer.WriteLine("## Context");
-                writer.WriteLine();
-                writer.WriteLine("We need to record the architectural decisions made on this project.");
-                writer.WriteLine();
-                writer.WriteLine("## Decision");
-                writer.WriteLine();
-                writer.WriteLine("We will use Architecture Decision Records, as described by Michael Nygard in this article: http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions");
-                writer.WriteLine();
-                writer.WriteLine("## Consequences");
-                writer.WriteLine();
-                writer.WriteLine("See Michael Nygard's article, linked above.");
+                Directory.CreateDirectory(this.docFolder);
             }
         }
 

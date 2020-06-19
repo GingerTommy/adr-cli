@@ -1,10 +1,9 @@
-using System;
-using System.IO;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace adr
 {
-    public class AdrSettings
+    internal class AdrSettings
     {
         private const string DefaultFileName = "adr.config.json";
 
@@ -14,18 +13,7 @@ namespace adr
         {
         }
 
-        public static AdrSettings Current
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = Read(new AdrSettings());
-                }
-
-                return instance;
-            }
-        }
+        public static AdrSettings Current => instance ??= Read(new AdrSettings());
 
         public string DocFolder { get; set; }
 
